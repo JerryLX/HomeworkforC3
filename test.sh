@@ -67,22 +67,22 @@ printf "$EXPECTEDSTDOUTPUT2" > e_stdout2
 
 # Run the tests on both programs.
 echo "Running dict1 datafile outputfile < keyfile > stdout1_1"
-dict1 datafile outputfile1_1 < keyfile > stdout1_1
+./dict1 datafile outputfile1_1 < keyfile > stdout1_1
 #echo "Contents of outputfile"
 #cat outputfile
 
 echo "Running dict1 datafile2 outputfile2 < keyfile2 > stdout1_2"
-dict1 datafile2 outputfile1_2 < keyfile2 > stdout1_2
+./dict1 datafile2 outputfile1_2 < keyfile2 > stdout1_2
 #echo "Contents of outputfile2"
 #cat outputfile2
 
 echo "Running dict2 datafile outputfile < keyfile > stdout2_1"
-dict2 datafile outputfile2_1 < keyfile > stdout2_1
+./dict2 datafile outputfile2_1 < keyfile > stdout2_1
 #echo "Contents of outputfile"
 #cat outputfile
 
 echo "Running dict2 datafile2 outputfile2 < keyfile2 > stdout2_2"
-dict2 datafile2 outputfile2_2 < keyfile2 > stdout2_2
+./dict2 datafile2 outputfile2_2 < keyfile2 > stdout2_2
 #echo "Contents of outputfile2"
 #cat outputfile2
 
