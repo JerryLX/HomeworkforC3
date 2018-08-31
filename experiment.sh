@@ -5,21 +5,22 @@ echo "Making dict1 and dict2"
 make dict1 -B
 make dict2 -B
 
-num_of_testdata=(1000 2000 3000 4000 5000 6000 7000 8000)
-num_of_test=1
-num_of_key=100
+DATASIZE=(1000 2000 3000 4000 5000 6000 7000 8000)
+TEST=1
+KEYSIZE=100
+FILE="athlete_events_filtered.csv"
 
-for data in ${num_of_testdata[@]}
+for data in ${DATASIZE[@]}
 do
     echo "Test random data with size =" $data ":"
     total1=0.0
     total2=0.0
     iter=0
-    while(($iter<$num_of_test))
+    while(($iter<$TEST))
     do
-        shuf -n $data athlete_events_filtered.csv > datafile
-        cat datafile | awk -F ',' '{print $2}' | shuf -n $num_of_key > keyfile
-        #cat athlete_events_filtered.csv | awk -F ',' '{print $2}' | shuf -n $num_of_key > keyfile
+        shuf -n $data $FILE > datafile
+        cat datafile | awk -F ',' '{print $2}' | shuf -n $KEYSIZE > keyfile
+        #cat $FILE | awk -F ',' '{print $2}' | shuf -n $KEYSIZE > keyfile
         
         dict1 datafile output1 < keyfile > stdout1
         dict2 datafile output2 < keyfile > stdout2
@@ -33,25 +34,25 @@ do
         total2=`echo "$total2 + $result2"|bc`
         let "iter++"
     done
-    total1=`echo "scale=2;$total1 / $num_of_test"|bc`
-    total2=`echo "scale=2;$total2 / $num_of_test"|bc`
+    total1=`echo "scale=2;$total1 / $TEST"|bc`
+    total2=`echo "scale=2;$total2 / $TEST"|bc`
     echo "average of dict1:" $total1, "dict2:" $total2
     echo "-----------------------------------------------"
     echo
 done
 
 echo "================================================"
-for data in ${num_of_testdata[@]}
+for data in ${DATASIZE[@]}
 do
     echo "Test sorted data with size =" $data ":"
     total1=0.0
     total2=0.0
     iter=0
-    while(($iter<$num_of_test))
+    while(($iter<$TEST))
     do
-        shuf -n $data athlete_events_filtered.csv |sort -t "," -k 2 -d > datafile
-        #cat athlete_events_filtered.csv | awk -F ',' '{print $2}' | shuf -n $num_of_key > keyfile
-        cat datafile | awk -F ',' '{print $2}' | shuf -n $num_of_key > keyfile
+        shuf -n $data $FILE |sort -t "," -k 2 -d > datafile
+        #cat $FILE | awk -F ',' '{print $2}' | shuf -n $KEYSIZE > keyfile
+        cat datafile | awk -F ',' '{print $2}' | shuf -n $KEYSIZE > keyfile
         
         dict1 datafile output1 < keyfile > stdout1
         dict2 datafile output2 < keyfile > stdout2
@@ -66,8 +67,8 @@ do
 
         let "iter++"
     done
-    total1=`echo "scale=2;$total1 / $num_of_test"|bc`
-    total2=`echo "scale=2;$total2 / $num_of_test"|bc`
+    total1=`echo "scale=2;$total1 / $TEST"|bc`
+    total2=`echo "scale=2;$total2 / $TEST"|bc`
     echo "average of dict1:" $total1, "dict2:" $total2
     echo "-----------------------------------------------"
     echo
